@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import {
   SELECT_PAGE, INVALIDATE_PEOPLE,
   REQUEST_PEOPLE, RECEIVE_PEOPLE
-} from '../actions/actions'
+} from '../actions/people_actions'
 
 const selectedPage = (state = '1', action) => {
   switch (action.type) {
@@ -16,7 +16,9 @@ const selectedPage = (state = '1', action) => {
 const people = (state = {
   isFetching: false,
   didInvalidate: false,
-  items: []
+  items: [],
+  hasNext: false,
+  hasPrevious: false
 }, action) => {
   switch (action.type) {
     case INVALIDATE_PEOPLE:
@@ -36,6 +38,8 @@ const people = (state = {
         isFetching: false,
         didInvalidate: false,
         items: action.people,
+        hasNext: action.hasNext,
+        hasPrevious: action.hasPrevious,
         lastUpdated: action.receivedAt
       }
     default:

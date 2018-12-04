@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectPage, fetchPeopleIfNeeded, invalidatePeople } from '../actions/actions'
+import { selectPage, fetchPeopleIfNeeded, invalidatePeople } from '../actions/people_actions'
 import Picker from '../components/Picker'
 import People from '../components/People'
 
@@ -10,6 +10,8 @@ class App extends Component {
     selectedPage: PropTypes.string.isRequired,
     people: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    hasNext: PropTypes.bool.isRequired,
+    hasPrevious: PropTypes.bool.isRequired,
     lastUpdated: PropTypes.number,
     dispatch: PropTypes.func.isRequired
   }
@@ -30,6 +32,24 @@ class App extends Component {
     this.props.dispatch(selectPage(nextPage))
   }
 
+  handleNextPage = e => {
+    e.preventDefault()
+
+    const { dispatch, selectedPage } = this.props
+    const next_page = (parseInt(selectedPage) + 1).toString()
+    dispatch(invalidatePeople(next_page))
+    dispatch(fetchPeopleIfNeeded(next_page))
+  }
+
+  handlePreviousPage = e => {
+    e.preventDefault()
+
+    const { dispatch, selectedPage } = this.props
+    const previous_page = (parseInt(selectedPage) - 1).toString()
+    dispatch(invalidatePeople(previous_page))
+    dispatch(fetchPeopleIfNeeded(previous_page))
+  }
+
   handleRefreshClick = e => {
     e.preventDefault()
 
@@ -39,7 +59,7 @@ class App extends Component {
   }
 
   render() {
-    const { selectedPage, people, isFetching, lastUpdated } = this.props
+    const { selectedPage, people, isFetching, hasNext, hasPrevious, lastUpdated } = this.props
     const isEmpty = people.length === 0
     return (
       <div>
@@ -63,6 +83,16 @@ class App extends Component {
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
               <People people={[people]} />
+              {hasPrevious &&
+                <button onClick={this.handlePreviousPage}>
+                  Previous
+                </button>
+              }
+              {hasNext &&
+                <button onClick={this.handleNextPage}>
+                  Next
+                </button>
+              }
             </div>
         }
       </div>
@@ -75,16 +105,22 @@ const mapStateToProps = state => {
   const {
     isFetching,
     lastUpdated,
-    items: people
+    items: people,
+    hasNext,
+    hasPrevious
   } = peopleByPage[selectedPage] || {
     isFetching: true,
-    items: []
+    items: [],
+    hasNext: false,
+    hasPrevious: false
   }
 
   return {
     selectedPage,
     people,
     isFetching,
+    hasNext,
+    hasPrevious,
     lastUpdated
   }
 }
