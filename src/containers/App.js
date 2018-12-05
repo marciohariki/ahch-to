@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { selectPage, fetchPeopleIfNeeded, invalidatePeople } from '../actions/people_actions'
 import People from '../components/People'
 import Header from '../components/Header'
+import Button from '../components/Button'
 
 class App extends Component {
   static propTypes = {
@@ -49,9 +50,19 @@ class App extends Component {
     dispatch(selectPage(previousPage))
   }
 
+  
+
   render() {
     const { selectedPage, people, isFetching, hasNext, hasPrevious, lastUpdated } = this.props
     const isEmpty = people.length === 0
+    const buttonContainerStyle = {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      maxWidth: '700px',
+      flex: '1',
+      margin: 'auto'
+    }
     return (
       <div>
         <Header />
@@ -59,16 +70,10 @@ class App extends Component {
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
               <People people={[people]} />
-              {hasPrevious &&
-                <button onClick={this.handlePreviousPage}>
-                  Previous
-                </button>
-              }
-              {hasNext &&
-                <button onClick={this.handleNextPage}>
-                  Next
-                </button>
-              }
+              <div style={buttonContainerStyle}>
+                <Button text='Previous' onClick={this.handlePreviousPage} enabled={hasPrevious} />
+                <Button text='Next' onClick={this.handleNextPage} enabled={hasPrevious} />
+              </div>
             </div>
         }
       </div>

@@ -15,7 +15,7 @@ const ItemPeopleStyle = {
   borderBottom: '1px solid grey',
   width: '100%',
   display: 'flex',
-  height: '50px',
+  height: '40px',
   alignItems: 'center'
 }
 
