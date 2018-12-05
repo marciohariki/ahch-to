@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { selectPage, fetchPeopleIfNeeded, invalidatePeople } from '../actions/people_actions'
-import Picker from '../components/Picker'
 import People from '../components/People'
+import Header from '../components/Header'
 
 class App extends Component {
   static propTypes = {
@@ -28,34 +28,25 @@ class App extends Component {
     }
   }
 
-  handleChange = nextPage => {
-    this.props.dispatch(selectPage(nextPage))
-  }
-
   handleNextPage = e => {
     e.preventDefault()
 
     const { dispatch, selectedPage } = this.props
-    const next_page = (parseInt(selectedPage) + 1).toString()
-    dispatch(invalidatePeople(next_page))
-    dispatch(fetchPeopleIfNeeded(next_page))
+    const nextPage = (parseInt(selectedPage) + 1).toString()
+    dispatch(invalidatePeople(nextPage))
+    dispatch(fetchPeopleIfNeeded(nextPage))
+    dispatch(selectPage(nextPage))
+    
   }
 
   handlePreviousPage = e => {
     e.preventDefault()
 
     const { dispatch, selectedPage } = this.props
-    const previous_page = (parseInt(selectedPage) - 1).toString()
-    dispatch(invalidatePeople(previous_page))
-    dispatch(fetchPeopleIfNeeded(previous_page))
-  }
-
-  handleRefreshClick = e => {
-    e.preventDefault()
-
-    const { dispatch, selectedPage } = this.props
-    dispatch(invalidatePeople(selectedPage))
-    dispatch(fetchPeopleIfNeeded(selectedPage))
+    const previousPage = (parseInt(selectedPage) - 1).toString()
+    dispatch(invalidatePeople(previousPage))
+    dispatch(fetchPeopleIfNeeded(previousPage))
+    dispatch(selectPage(previousPage))
   }
 
   render() {
@@ -63,22 +54,7 @@ class App extends Component {
     const isEmpty = people.length === 0
     return (
       <div>
-        <Picker value={selectedPage}
-                onChange={this.handleChange}
-                options={[ '1', '2' ]} />
-        <p>
-          {lastUpdated &&
-            <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
-              {' '}
-            </span>
-          }
-          {!isFetching &&
-            <button onClick={this.handleRefreshClick}>
-              Refresh
-            </button>
-          }
-        </p>
+        <Header />
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
