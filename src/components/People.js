@@ -16,7 +16,8 @@ const ItemPeopleStyle = {
   width: '100%',
   display: 'flex',
   height: '40px',
-  alignItems: 'center'
+  alignItems: 'center',
+  fontFamily: 'Courier'
 }
 
 const PeopleNameTextStyle = {

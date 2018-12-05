@@ -61,14 +61,18 @@ class App extends Component {
       alignItems: 'center',
       maxWidth: '700px',
       flex: '1',
-      margin: 'auto'
+      margin: '20px auto'
+    }
+    const contentContainerStyle = {
+      opacity: isFetching ? 0.5 : 1,
+      margin: '20px 0',
     }
     return (
       <div>
         <Header />
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-          : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+          : <div style={contentContainerStyle}>
               <People people={[people]} />
               <div style={buttonContainerStyle}>
                 <Button text='Previous' onClick={this.handlePreviousPage} enabled={hasPrevious} />

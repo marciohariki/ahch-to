@@ -7,7 +7,8 @@ const HeaderStyle = {
     alignItems: 'center',
     background: '#010150',
     color: "white",
-    fontSize: "18px"
+    fontSize: "18px",
+    fontFamily: 'Courier'
 }
 
 const Header = () => (
