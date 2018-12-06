@@ -4,7 +4,9 @@ import {
   REQUEST_PEOPLE, RECEIVE_PEOPLE
 } from '../actions/people_actions'
 
-const selectedPage = (state = '1', action) => {
+const STARTER_PAGE = '1'
+
+const selectedPage = (state = STARTER_PAGE, action) => {
   switch (action.type) {
     case SELECT_PAGE:
       return action.page
