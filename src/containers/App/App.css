@@ -1,5 +1,5 @@
 
-.contentContainer {
+.AppContainer {
     margin: 20px 0;
     display: flex;
     justify-content: center;
@@ -12,7 +12,7 @@
     margin-top: 35px;
 }
 
-.content {
+.Content {
     width: 100%;
     margin: 20px;
 }

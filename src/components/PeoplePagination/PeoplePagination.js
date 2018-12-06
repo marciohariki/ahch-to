@@ -6,11 +6,9 @@ import './PeoplePagination.css'
 
 export default class PeoplePagination extends Component {
     static propTypes = {
-      onNext: PropTypes.func.isRequired,
-      onPrevious: PropTypes.func.isRequired,
-      hasNext: PropTypes.bool.isRequired,
-      haPrevious: PropTypes.bool.isRequired,
-      dispatch: PropTypes.func.isRequired,
+      hasNext: PropTypes.bool,
+      haPrevious: PropTypes.bool,
+      dispatch: PropTypes.func,
       selectedPage: PropTypes.string.isRequired
     }
 
@@ -38,8 +36,8 @@ export default class PeoplePagination extends Component {
     render() {
       return (
         <div className='PeoplePaginationContainer'>
-          <Button text='Previous' onClick={this.onPrevious} enabled={this.props.hasPrevious} />
-          <Button text='Next' onClick={this.onNext} enabled={this.props.hasNext} />
+          <Button text='Previous' onClick={this.handlePreviousPage} enabled={this.props.hasPrevious} />
+          <Button text='Next' onClick={this.handleNextPage} enabled={this.props.hasNext} />
         </div>
       )
     }

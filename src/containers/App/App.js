@@ -37,7 +37,7 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <div className='ContentContainer'> 
+        <div className='AppContainer'> 
           {isEmpty
             ? (isFetching ? 
                 <ReactLoading type='spinningBubbles' color='#ffd700' height={'20%'} width={'20%'} /> : 
@@ -46,8 +46,7 @@ class App extends Component {
             : 
               <div className='Content'>
                 <PeopleList people={people} />
-                <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} 
-                    dispatch={this.dispatch} selectedPage={selectedPage}/>
+                <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} dispatch={this.props.dispatch} selectedPage={selectedPage}/>
               </div>
           }
 

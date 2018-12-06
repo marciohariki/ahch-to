@@ -10,7 +10,7 @@ function getIdByUrl(url) {
 const PeopleList = ({people}) => (
   <div className='PeopleContainer'>
     {people.map((p, i) =>
-      <div className='PeopleItem'>
+      <div className='PeopleItem' key={i}>
         <div className='PeopleId'>{getIdByUrl(p.url)}</div>
         <div className='PeopleName'>{p.name}</div>
       </div>
