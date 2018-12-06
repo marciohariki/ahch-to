@@ -58,18 +58,11 @@ function shouldFetchPeople(state, page) {
     }
 }
 
-export function fetchPeopleIfNeeded(page) {
+export function changePage(page) {
     return (dispatch, getState) => {
         if (shouldFetchPeople(getState(), page)) {
-            return dispatch(fetchPeople(page))
+            dispatch(fetchPeople(page))   
         }
-    }
-}
-
-export function selectPageNew(page) {
-    return (dispatch) => {
-        dispatch(invalidatePeople(page))
-        dispatch(fetchPeopleIfNeeded(page))
-        dispatch(selectPage(page))
-    }
+        return dispatch(selectPage(page))
+    }   
 }

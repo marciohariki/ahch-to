@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchPeopleIfNeeded, selectPage } from '../../actions/people_actions'
+import { changePage } from '../../actions/people_actions'
 import PeopleList from '../../components/PeopleList/PeopleList'
 import Header from '../../components/Header/Header'
 import ReactLoading from 'react-loading'
@@ -22,14 +22,7 @@ class App extends Component {
 
   componentDidMount() {
     const { dispatch, selectedPage } = this.props
-    dispatch(fetchPeopleIfNeeded(selectedPage))
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.selectedPage !== this.props.selectedPage) {
-      const { dispatch, selectedPage } = this.props
-      dispatch(fetchPeopleIfNeeded(selectedPage))
-    }
+    dispatch(changePage(selectedPage))
   }
 
   handleNextPage = e => {
@@ -37,9 +30,7 @@ class App extends Component {
 
     const { dispatch, selectedPage } = this.props
     const nextPage = (parseInt(selectedPage) + 1).toString()
-    dispatch(fetchPeopleIfNeeded(nextPage))
-    dispatch(selectPage(nextPage))
-    
+    dispatch(changePage(nextPage))
   }
 
   handlePreviousPage = e => {
@@ -47,12 +38,11 @@ class App extends Component {
 
     const { dispatch, selectedPage } = this.props
     const previousPage = (parseInt(selectedPage) - 1).toString()
-    dispatch(fetchPeopleIfNeeded(previousPage))
-    dispatch(selectPage(previousPage))
+    dispatch(changePage(previousPage))
   }
 
   render() {
-    const { selectedPage, people, isFetching, hasNext, hasPrevious, didInvalidate } = this.props
+    const { people, isFetching, hasNext, hasPrevious, didInvalidate } = this.props
     const isEmpty = people.length === 0
     let content
     if(isFetching) {
