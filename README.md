@@ -8,7 +8,7 @@ Além disso, estruturei o projeto para se adequar a seguinte modelo:
 
 ![archtecture](https://bitbucket.org/marciohariki/mira-frontend/raw/e3a9e6d864f00103c5719b7e5d44acd3f6b11032/docs/archtecture.png)
 
-A ideia é ter uma camada de comunicação com a API que ficaria do Middleware, uma camada de regras de negócio com os services e depois com base nisso a arquitetura com Redux para gereneciamento de estado e componentes.
+A ideia é ter uma camada de comunicação com uma ou mais API que ficaria no Middleware, uma camada de regras de negócio com os services e depois com base nisso a arquitetura com Redux para gereneciamento de estado e componentes.
 
 ## Requirementos
 
