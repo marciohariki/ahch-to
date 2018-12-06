@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { selectPage, fetchPeopleIfNeeded, invalidatePeople } from '../actions/people_actions'
-import PeopleList from '../components/PeopleList/PeopleList'
-import Header from '../components/Header/Header'
+import { fetchPeopleIfNeeded } from '../../actions/people_actions'
+import PeopleList from '../../components/PeopleList/PeopleList'
+import Header from '../../components/Header/Header'
 import ReactLoading from 'react-loading';
-import PeoplePagination from '../components/PeoplePagination/PeoplePagination';
+import PeoplePagination from '../../components/PeoplePagination/PeoplePagination';
+import './App.css'
 
 class App extends Component {
   static propTypes = {
@@ -30,62 +31,23 @@ class App extends Component {
     }
   }
 
-  handleNextPage = e => {
-    e.preventDefault()
-
-    const { dispatch, selectedPage } = this.props
-    const nextPage = (parseInt(selectedPage) + 1).toString()
-    dispatch(invalidatePeople(nextPage))
-    dispatch(fetchPeopleIfNeeded(nextPage))
-    dispatch(selectPage(nextPage))
-    
-  }
-
-  handlePreviousPage = e => {
-    e.preventDefault()
-
-    const { dispatch, selectedPage } = this.props
-    const previousPage = (parseInt(selectedPage) - 1).toString()
-    dispatch(invalidatePeople(previousPage))
-    dispatch(fetchPeopleIfNeeded(previousPage))
-    dispatch(selectPage(previousPage))
-  }
-
-  
-
   render() {
-    const { people, isFetching, hasNext, hasPrevious } = this.props
+    const { selectedPage, people, isFetching, hasNext, hasPrevious } = this.props
     const isEmpty = people.length === 0
-    const contentContainerStyle = {
-      opacity: isFetching ? 0.5 : 1,
-      margin: '20px 0',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      maxWidth: '700px',
-      height: '500px',
-      flex: '1',
-      flexDirection: 'column',
-      margin: 'auto',
-      marginTop: '35px'
-    }
-    const contentStyle = {
-      width: '100%',
-      margin: '20px'
-    }
     return (
       <div>
         <Header />
-        <div style={contentContainerStyle}> 
+        <div className='ContentContainer'> 
           {isEmpty
             ? (isFetching ? 
                 <ReactLoading type='spinningBubbles' color='#ffd700' height={'20%'} width={'20%'} /> : 
                 <h2>Empty.</h2>
               )
             : 
-              <div style={contentStyle}>
+              <div className='Content'>
                 <PeopleList people={people} />
-                <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} onNext={this.handleNextPage} onPrevious={this.handlePreviousPage}/>
+                <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} 
+                    dispatch={this.dispatch} selectedPage={selectedPage}/>
               </div>
           }
 
