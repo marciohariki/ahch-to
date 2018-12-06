@@ -1,9 +1,9 @@
 
 import { peopleMock } from "./people_mock";
 
-export function getSwapi(endpoint) {
+export function doGet(endpoint) {
     switch(endpoint) {
-        case 'people': {
+        case 'people?page=1': {
             return Promise.resolve(peopleMock)
         }
     }

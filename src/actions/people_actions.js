@@ -1,8 +1,4 @@
-import fetch from 'cross-fetch'
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
-export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
+import { getPeopleByPage } from '../services/people.service'
 
 export const SELECT_PAGE = 'SELECT_PAGE'
 export const REQUEST_PEOPLE = 'REQUEST_PEOPLE'
@@ -31,23 +27,22 @@ function requestPeople(page) {
     }
 }
 
-function receivePeople(page, json) {
+function receivePeople(page, peoplePage) {
     return {
         type: RECEIVE_PEOPLE,
         page,
-        people: json.results.map(result => result),
-        hasNext: !!json.next,
-        hasPrevious: !!json.previous,
-        receivedAt: Date.now()
+        people: peoplePage.items,
+        hasNext: peoplePage.hasNext,
+        hasPrevious: peoplePage.hasPrevious,
+        receivedAt: peoplePage.receivedAt
     }
 }
 
 function fetchPeople(page) {
     return dispatch => {
         dispatch(requestPeople(page))
-        return fetch(`https://swapi.co/api/people?page=${page}`)
-            .then(response => response.json())
-            .then(json => dispatch(receivePeople(page, json)))
+        return getPeopleByPage(page)
+            .then(peoplePage => dispatch(receivePeople(page, peoplePage)))
     }
 }
 
