@@ -24,3 +24,7 @@ docker-compose up
 
 ## Melhorias para o projeto
 - Testes para os componentes criados
+- Adicionar Router na aplicação
+- Melhorar o encapsulamento do Reducer
+- Mudar a parte de css para less
+- Criar estilos globais para padronização de UI
