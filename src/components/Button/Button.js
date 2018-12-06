@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames';
+import './Button.css'
+
 export default class Button extends Component {
     static propTypes = {
       onClick: PropTypes.func.isRequired,
@@ -8,18 +11,21 @@ export default class Button extends Component {
     }
   
     handleGoClick = (e) => {
-      this.props.onClick(e)
+      if (this.props.enabled) {
+        this.props.onClick(e)
+      }
     }
   
     render() {
-      const buttonStyle = {
-        flex: '1',
-        margin: 'auto'
-      }
+      const buttonClasses = classNames({
+        'Button': true,
+        'ButtonDisabled': !this.props.enabled
+      });
+  
       return (
-        <button style={buttonStyle} onClick={this.handleGoClick}>
+        <div className={buttonClasses} onClick={this.handleGoClick}>
             {this.props.text}
-        </button>
+        </div>
       )
     }
 }

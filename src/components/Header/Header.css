@@ -1,0 +1,10 @@
+.Header {
+    display:  flex ;
+    justify-content:  center ;
+    align-items:  center ;
+    background:  #010150 ;
+    color: white;
+    font-size: 18px;
+    font-family:  Courier ;
+}
+    

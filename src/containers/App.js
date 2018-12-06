@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { selectPage, fetchPeopleIfNeeded, invalidatePeople } from '../actions/people_actions'
-import People from '../components/People'
-import Header from '../components/Header'
-import Button from '../components/Button'
+import PeopleList from '../components/PeopleList/PeopleList'
+import Header from '../components/Header/Header'
+import ReactLoading from 'react-loading';
+import PeoplePagination from '../components/PeoplePagination/PeoplePagination';
 
 class App extends Component {
   static propTypes = {
@@ -53,33 +54,42 @@ class App extends Component {
   
 
   render() {
-    const { selectedPage, people, isFetching, hasNext, hasPrevious, lastUpdated } = this.props
+    const { people, isFetching, hasNext, hasPrevious } = this.props
     const isEmpty = people.length === 0
-    const buttonContainerStyle = {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      maxWidth: '700px',
-      flex: '1',
-      margin: '20px auto'
-    }
     const contentContainerStyle = {
       opacity: isFetching ? 0.5 : 1,
       margin: '20px 0',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      maxWidth: '700px',
+      height: '500px',
+      flex: '1',
+      flexDirection: 'column',
+      margin: 'auto',
+      marginTop: '35px'
+    }
+    const contentStyle = {
+      width: '100%',
+      margin: '20px'
     }
     return (
       <div>
         <Header />
-        {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-          : <div style={contentContainerStyle}>
-              <People people={[people]} />
-              <div style={buttonContainerStyle}>
-                <Button text='Previous' onClick={this.handlePreviousPage} enabled={hasPrevious} />
-                <Button text='Next' onClick={this.handleNextPage} enabled={hasPrevious} />
+        <div style={contentContainerStyle}> 
+          {isEmpty
+            ? (isFetching ? 
+                <ReactLoading type='spinningBubbles' color='#ffd700' height={'20%'} width={'20%'} /> : 
+                <h2>Empty.</h2>
+              )
+            : 
+              <div style={contentStyle}>
+                <PeopleList people={people} />
+                <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} onNext={this.handleNextPage} onPrevious={this.handlePreviousPage}/>
               </div>
-            </div>
-        }
+          }
+
+        </div>
       </div>
     )
   }
