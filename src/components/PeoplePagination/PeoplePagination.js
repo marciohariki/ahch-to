@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from '../Button/Button'
-import { selectPage, fetchPeopleIfNeeded, invalidatePeople } from '../../actions/people_actions'
+import { selectPage, fetchPeopleIfNeeded } from '../../actions/people_actions'
 import './PeoplePagination.css'
 
 export default class PeoplePagination extends Component {
@@ -17,7 +17,6 @@ export default class PeoplePagination extends Component {
 
         const { dispatch, selectedPage } = this.props
         const nextPage = (parseInt(selectedPage) + 1).toString()
-        dispatch(invalidatePeople(nextPage))
         dispatch(fetchPeopleIfNeeded(nextPage))
         dispatch(selectPage(nextPage))
         
@@ -28,7 +27,6 @@ export default class PeoplePagination extends Component {
 
         const { dispatch, selectedPage } = this.props
         const previousPage = (parseInt(selectedPage) - 1).toString()
-        dispatch(invalidatePeople(previousPage))
         dispatch(fetchPeopleIfNeeded(previousPage))
         dispatch(selectPage(previousPage))
     }

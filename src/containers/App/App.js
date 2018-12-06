@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import { fetchPeopleIfNeeded } from '../../actions/people_actions'
 import PeopleList from '../../components/PeopleList/PeopleList'
 import Header from '../../components/Header/Header'
-import ReactLoading from 'react-loading';
-import PeoplePagination from '../../components/PeoplePagination/PeoplePagination';
+import ReactLoading from 'react-loading'
+import PeoplePagination from '../../components/PeoplePagination/PeoplePagination'
+import Error from '../../components/Error/Error'
 import './App.css'
 
 class App extends Component {
@@ -32,24 +33,28 @@ class App extends Component {
   }
 
   render() {
-    const { selectedPage, people, isFetching, hasNext, hasPrevious } = this.props
+    const { selectedPage, people, isFetching, hasNext, hasPrevious, didInvalidate } = this.props
     const isEmpty = people.length === 0
+    let content
+    if(isFetching) {
+      content = <ReactLoading type='spinningBubbles' color='#ffd700' height={'10%'} width={'10%'} /> 
+    } else if (didInvalidate) {
+      content = <Error />
+    } else if (isEmpty) {
+      content = <h2>There is nothing to show.</h2>
+    } else {
+      content = (
+        <div className='Content'>
+          <PeopleList people={people} />
+          <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} dispatch={this.props.dispatch} selectedPage={selectedPage}/>
+        </div>
+      )
+    }
     return (
       <div>
         <Header />
         <div className='AppContainer'> 
-          {isEmpty
-            ? (isFetching ? 
-                <ReactLoading type='spinningBubbles' color='#ffd700' height={'20%'} width={'20%'} /> : 
-                <h2>Empty.</h2>
-              )
-            : 
-              <div className='Content'>
-                <PeopleList people={people} />
-                <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} dispatch={this.props.dispatch} selectedPage={selectedPage}/>
-              </div>
-          }
-
+          {content}
         </div>
       </div>
     )
@@ -63,12 +68,14 @@ const mapStateToProps = state => {
     lastUpdated,
     items: people,
     hasNext,
-    hasPrevious
+    hasPrevious,
+    didInvalidate
   } = peopleByPage[selectedPage] || {
     isFetching: true,
     items: [],
     hasNext: false,
-    hasPrevious: false
+    hasPrevious: false,
+    didInvalidate: false
   }
 
   return {
@@ -77,7 +84,8 @@ const mapStateToProps = state => {
     isFetching,
     hasNext,
     hasPrevious,
-    lastUpdated
+    lastUpdated,
+    didInvalidate
   }
 }
 

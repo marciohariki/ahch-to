@@ -24,6 +24,7 @@ const people = (state = {
     case INVALIDATE_PEOPLE:
       return {
         ...state,
+        isFetching: false,
         didInvalidate: true
       }
     case REQUEST_PEOPLE:
@@ -49,8 +50,16 @@ const people = (state = {
 
 const peopleByPage = (state = { }, action) => {
   switch (action.type) {
-    case INVALIDATE_PEOPLE:
-    case RECEIVE_PEOPLE:
+    case INVALIDATE_PEOPLE: 
+      return {
+        ...state,
+        [action.page]: people(state[action.page], action)
+      }
+    case RECEIVE_PEOPLE: 
+      return {
+        ...state,
+        [action.page]: people(state[action.page], action)
+      }
     case REQUEST_PEOPLE:
       return {
         ...state,

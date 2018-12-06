@@ -43,6 +43,7 @@ function fetchPeople(page) {
         dispatch(requestPeople(page))
         return getPeopleByPage(page)
             .then(peoplePage => dispatch(receivePeople(page, peoplePage)))
+            .catch(() => dispatch(invalidatePeople(page)))
     }
 }
 
@@ -62,5 +63,13 @@ export function fetchPeopleIfNeeded(page) {
         if (shouldFetchPeople(getState(), page)) {
             return dispatch(fetchPeople(page))
         }
+    }
+}
+
+export function selectPageNew(page) {
+    return (dispatch) => {
+        dispatch(invalidatePeople(page))
+        dispatch(fetchPeopleIfNeeded(page))
+        dispatch(selectPage(page))
     }
 }
