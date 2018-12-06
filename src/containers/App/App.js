@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchPeopleIfNeeded } from '../../actions/people_actions'
+import { fetchPeopleIfNeeded, selectPage } from '../../actions/people_actions'
 import PeopleList from '../../components/PeopleList/PeopleList'
 import Header from '../../components/Header/Header'
 import ReactLoading from 'react-loading'
-import PeoplePagination from '../../components/PeoplePagination/PeoplePagination'
+import Pagination from '../../components/Pagination/Pagination'
 import Error from '../../components/Error/Error'
 import './App.css'
 
@@ -32,6 +32,25 @@ class App extends Component {
     }
   }
 
+  handleNextPage = e => {
+    e.preventDefault()
+
+    const { dispatch, selectedPage } = this.props
+    const nextPage = (parseInt(selectedPage) + 1).toString()
+    dispatch(fetchPeopleIfNeeded(nextPage))
+    dispatch(selectPage(nextPage))
+    
+  }
+
+  handlePreviousPage = e => {
+    e.preventDefault()
+
+    const { dispatch, selectedPage } = this.props
+    const previousPage = (parseInt(selectedPage) - 1).toString()
+    dispatch(fetchPeopleIfNeeded(previousPage))
+    dispatch(selectPage(previousPage))
+  }
+
   render() {
     const { selectedPage, people, isFetching, hasNext, hasPrevious, didInvalidate } = this.props
     const isEmpty = people.length === 0
@@ -46,7 +65,8 @@ class App extends Component {
       content = (
         <div className='Content'>
           <PeopleList people={people} />
-          <PeoplePagination hasNext={hasNext} hasPrevious={hasPrevious} dispatch={this.props.dispatch} selectedPage={selectedPage}/>
+          <Pagination hasNext={hasNext} hasPrevious={hasPrevious} 
+              onNext={this.handleNextPage} onPrevious={this.handlePreviousPage}/>
         </div>
       )
     }
