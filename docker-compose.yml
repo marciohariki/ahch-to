@@ -1,8 +1,7 @@
 version: '3.5'
 
 services:
-
-  sample-app:
+  app:
     container_name: mira-frontend
     build:
       context: .

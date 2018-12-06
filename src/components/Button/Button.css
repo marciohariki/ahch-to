@@ -1,0 +1,20 @@
+.Button {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    color: black;
+    background: #ffd700;
+    display: flex;
+    justify-content: center;
+    font-family: Courier;
+    cursor: pointer;
+}
+
+.ButtonDisabled {
+    background: lightgray !important;
+    color: darkgray !important;
+}
+
+.Button:hover {
+    opacity: 0.8;
+}
