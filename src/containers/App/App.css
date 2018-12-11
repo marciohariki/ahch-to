@@ -1,6 +1,5 @@
 
 .AppContainer {
-    margin: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,8 +7,7 @@
     height: 500px;
     flex: 1;
     flex-direction: column;
-    margin: auto;
-    margin-top: 35px;
+    margin: 35px auto;
 }
 
 .Content {

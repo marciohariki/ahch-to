@@ -1,19 +1,16 @@
-import { combineReducers } from 'redux'
-import {
-  SELECT_PAGE, INVALIDATE_PEOPLE,
-  REQUEST_PEOPLE, RECEIVE_PEOPLE
-} from '../actions/people_actions'
+import {combineReducers} from 'redux'
+import {INVALIDATE_PEOPLE, RECEIVE_PEOPLE, REQUEST_PEOPLE, SELECT_PAGE} from '../actions/people_actions'
 
-const STARTER_PAGE = '1'
+const STARTER_PAGE = '1';
 
 const selectedPage = (state = STARTER_PAGE, action) => {
   switch (action.type) {
     case SELECT_PAGE:
-      return action.page
+      return action.page;
     default:
       return state
   }
-}
+};
 
 const people = (state = {
   isFetching: false,
@@ -28,13 +25,13 @@ const people = (state = {
         ...state,
         isFetching: false,
         didInvalidate: true
-      }
+      };
     case REQUEST_PEOPLE:
       return {
         ...state,
         isFetching: true,
         didInvalidate: false
-      }
+      };
     case RECEIVE_PEOPLE:
       return {
         ...state,
@@ -44,7 +41,7 @@ const people = (state = {
         hasNext: action.hasNext,
         hasPrevious: action.hasPrevious,
         lastUpdated: action.receivedAt
-      }
+      };
     default:
       return state
   }
@@ -56,25 +53,25 @@ const peopleByPage = (state = { }, action) => {
       return {
         ...state,
         [action.page]: people(state[action.page], action)
-      }
+      };
     case RECEIVE_PEOPLE: 
       return {
         ...state,
         [action.page]: people(state[action.page], action)
-      }
+      };
     case REQUEST_PEOPLE:
       return {
         ...state,
         [action.page]: people(state[action.page], action)
-      }
+      };
     default:
       return state
   }
-}
+};
 
 const rootReducer = combineReducers({
   peopleByPage,
   selectedPage
-})
+});
 
 export default rootReducer

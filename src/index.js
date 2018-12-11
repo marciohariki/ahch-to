@@ -1,25 +1,12 @@
 import React from 'react'
-import { render } from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import { createLogger } from 'redux-logger'
-import reducer from './reducers/reducers'
+import {render} from 'react-dom'
+import {Provider} from 'react-redux'
 import App from './containers/App/App'
-
-const middleware = [ thunk ]
-if (process.env.NODE_ENV !== 'production') {
-  middleware.push(createLogger())
-}
-
-const store = createStore(
-  reducer,
-  applyMiddleware(...middleware)
-)
+import {store} from './store/index';
 
 render(
   <Provider store={store}>
-    <App />
+    <App/>
   </Provider>,
   document.getElementById('root')
-)
+);

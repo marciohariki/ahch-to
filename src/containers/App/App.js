@@ -18,33 +18,33 @@ class App extends Component {
     hasPrevious: PropTypes.bool.isRequired,
     lastUpdated: PropTypes.number,
     dispatch: PropTypes.func.isRequired
-  }
+  };
 
   componentDidMount() {
-    const { dispatch, selectedPage } = this.props
+    const { dispatch, selectedPage } = this.props;
     dispatch(changePage(selectedPage))
   }
 
   handleNextPage = e => {
     e.preventDefault()
 
-    const { dispatch, selectedPage } = this.props
-    const nextPage = (parseInt(selectedPage) + 1).toString()
+    const { dispatch, selectedPage } = this.props;
+    const nextPage = (parseInt(selectedPage) + 1).toString();
     dispatch(changePage(nextPage))
-  }
+  };
 
   handlePreviousPage = e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { dispatch, selectedPage } = this.props
-    const previousPage = (parseInt(selectedPage) - 1).toString()
+    const { dispatch, selectedPage } = this.props;
+    const previousPage = (parseInt(selectedPage) - 1).toString();
     dispatch(changePage(previousPage))
-  }
+  };
 
   render() {
-    const { people, isFetching, hasNext, hasPrevious, didInvalidate } = this.props
-    const isEmpty = people.length === 0
-    let content
+    const { people, isFetching, hasNext, hasPrevious, didInvalidate } = this.props;
+    const isEmpty = people.length === 0;
+    let content;
     if(isFetching) {
       content = <ReactLoading type='spinningBubbles' color='#ffd700' height={'10%'} width={'10%'} /> 
     } else if (didInvalidate) {
@@ -72,7 +72,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { selectedPage, peopleByPage } = state
+  const { selectedPage, peopleByPage } = state;
   const {
     isFetching,
     lastUpdated,
@@ -86,7 +86,7 @@ const mapStateToProps = state => {
     hasNext: false,
     hasPrevious: false,
     didInvalidate: false
-  }
+  };
 
   return {
     selectedPage,
@@ -97,6 +97,6 @@ const mapStateToProps = state => {
     lastUpdated,
     didInvalidate
   }
-}
+};
 
 export default connect(mapStateToProps)(App)

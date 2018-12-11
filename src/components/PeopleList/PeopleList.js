@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import './PeopleList.css'
 
 function getIdByUrl(url) {
-  const splittedUrl = url.split('/')
-  return ("0" + splittedUrl[splittedUrl.length -2]).slice(-2)
+  const splittedUrl = url.split('/');
+  return ("0" + splittedUrl[splittedUrl.length - 2]).slice(-2)
 }
 
 const PeopleList = ({people}) => (
@@ -16,10 +16,10 @@ const PeopleList = ({people}) => (
       </div>
     )}
   </div>
-)
+);
 
 PeopleList.propTypes = {
   people: PropTypes.array.isRequired
-}
+};
 
 export default PeopleList

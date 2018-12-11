@@ -63,5 +63,5 @@ export const peopleMock = {
             "url": "https://swapi.co/api/people/2/"
         }
     ]
-}
+};
   
