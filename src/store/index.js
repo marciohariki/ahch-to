@@ -1,10 +1,15 @@
-import React from 'react';
-import { createStore, combineReducers } from 'redux';
-import reducers from '../reducers/reducer.js'
+import { applyMiddleware, compose, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import reducers from '../reducers';
+import { personsWatchFetchSaga } from '../saga';
 
-export const store = createStore(
-    combineReducers({
-        state: reducers
-    }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
+
+sagaMiddleware.run(personsWatchFetchSaga);
+
+export default store;
