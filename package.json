@@ -8,7 +8,7 @@
     "classnames": "^2.2.6",
     "cross-fetch": "^2.2.3",
     "immutable": "^4.0.0-rc.12",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-loading": "^2.0.3",
@@ -40,6 +40,12 @@
   ],
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
+    "eslint-config-node": "^4.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "jest": "^23.6.0",
     "redux-devtools": "^3.4.2"
   }

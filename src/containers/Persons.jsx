@@ -1,24 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { func, object, string } from 'prop-types';
+
 import { personsFetch } from '../actions';
 
 class Persons extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.fetchPersons();
   };
 
-  renderPersonList() {
+  renderPersonList () {
     return (
       <div>
         <h1>Persons list</h1>
         <ul>
-          {this.props.persons.map(person => <li>{person.name}</li>)}
+          {this.props.persons.map((person, key) => <li key={key}>{person.name}</li>)}
         </ul>
       </div>
     );
   }
 
-  renderLoading() {
+  renderLoading () {
     return (
       <div>
         Loading...
@@ -26,10 +28,10 @@ class Persons extends React.Component {
     );
   }
 
-  render() {
-    return this.props.status === 'fetching' ?
-      this.renderLoading() :
-      this.renderPersonList();
+  render () {
+    return this.props.status === 'fetching'
+      ? this.renderLoading()
+      : this.renderPersonList();
   }
 }
 
@@ -43,9 +45,15 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchPersons() {
+  fetchPersons () {
     return dispatch(personsFetch());
   }
 });
+
+Persons.propTypes = {
+  fetchPersons: func.isRequired,
+  persons: object.isRequired,
+  status: string.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Persons);
